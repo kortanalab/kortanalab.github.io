@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>KORTANA · The lab opens: why I am paper trading a 40 year old system</title>
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' fill='%231a1a1a'/%3E%3Cellipse cx='32' cy='40' rx='20' ry='14' fill='%236d4aff'/%3E%3Cellipse cx='32' cy='42' rx='13' ry='9' fill='%2354379e'/%3E%3Cpath d='M32 26 L40 34 L24 34 Z' fill='%236d4aff'/%3E%3Ccircle cx='27' cy='31' r='2' fill='%231a1a1a'/%3E%3Ccircle cx='37' cy='31' r='2' fill='%231a1a1a'/%3E%3C/svg%3E">
+<style>
+  :root { --bg:#101014; --text:#e8e8ec; --dim:#8a8a94; --accent:#6d4aff; --maxw:42rem; }
+  * { margin:0; padding:0; box-sizing:border-box; }
+  body { background:var(--bg); color:var(--text); font-family:Georgia,'Times New Roman',serif; line-height:1.75; padding:0 1.5rem; }
+  .wrap { max-width:var(--maxw); margin:0 auto; padding:4rem 0; }
+  header.site { border-bottom:1px solid #2a2a32; padding-bottom:2rem; margin-bottom:2.5rem; }
+  .wordmark { font-family:'Helvetica Neue',Helvetica,Arial,sans-serif; font-size:clamp(1.8rem,5vw,2.6rem); font-weight:700; letter-spacing:0.32em; text-indent:0.32em; margin-bottom:0.3rem; display:inline-block; color:var(--text); text-decoration:none; }
+  .sitenav { font-family:'Helvetica Neue',Helvetica,Arial,sans-serif; font-size:0.8rem; letter-spacing:0.12em; text-transform:uppercase; margin-top:1.2rem; }
+  .sitenav a { color:var(--dim); text-decoration:none; margin-right:1.6rem; }
+  .sitenav a:hover { color:var(--text); }
+  .postmeta { font-family:'Helvetica Neue',Helvetica,Arial,sans-serif; font-size:0.75rem; letter-spacing:0.12em; text-transform:uppercase; color:var(--dim); margin-bottom:1rem; }
+  h1 { font-size:1.9rem; line-height:1.25; margin-bottom:1.5rem; }
+  p { font-size:1.06rem; margin-bottom:1.1rem; }
+  ul { margin:0 0 1.1rem 1.2rem; }
+  li { margin-bottom:0.5rem; font-size:1.06rem; }
+  blockquote { border-left:2px solid var(--accent); padding-left:1rem; color:var(--dim); font-style:italic; margin:1.2rem 0; }
+  footer.site { border-top:1px solid #2a2a32; margin-top:3rem; padding-top:1.5rem; font-family:'Helvetica Neue',Helvetica,Arial,sans-serif; font-size:0.85rem; color:var(--dim); display:flex; justify-content:space-between; flex-wrap:wrap; gap:0.5rem; }
+  footer.site a { color:var(--dim); }
+  .nextprev { margin-top:2.5rem; font-family:'Helvetica Neue',Helvetica,Arial,sans-serif; font-size:0.85rem; }
+  .nextprev a { color:var(--accent); text-decoration:none; }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <header class="site">
+    <a class="wordmark" href="/">KORTANA</a>
+    <nav class="sitenav">
+      <a href="/">Home</a>
+      <a href="/journal/" aria-current="page">Journal</a>
+      <a href="/track-record/">Track record</a>
+    </nav>
+  </header>
+
+  <article>
+    <div class="postmeta">Sunday, November 29, 2026 · Post 001 · the lab opens</div>
+    <h1>The lab opens: why I am paper trading a 40 year old system</h1>
+
+    <p>Welcome to a public lab notebook. This is the founding post, and it is about the least glamorous trading project you will read this year.</p>
+
+    <p>I run one ruleset. It is the Turtle system's spine, simplified to its irreducible core: buy when price breaks above its 20-day high, get out when price crosses below its 10-day low. No indicators stacked on indicators, no machine learning, no signals. The rules were written decades ago and they have not changed once since I deployed them. The operator learns. The bot never does.</p>
+
+    <p>The ruleset runs the same way on three markets through small paper and practice accounts: stocks on a US exchange simulator, forex through a practice account, and crypto. Position size is about $1,000 at entry, maximum three positions per market. Starting capital was $100,000 of imaginary money on October 13, 2026.</p>
+
+    <p>Why paper, and why public? Because the one thing nobody publishes online is an unedited record. Everyone shows winners. Nobody shows the week where the bot malfunctioned, bought the same trade eleven times, and had to be manually trimmed while the operator ate dinner. Those weeks are where the actual learning is, so that is what gets published here. Every Sunday: what happened, what the evidence says, what changed, and every rule break. The boring weeks get published too. That is the point.</p>
+
+    <p>The plan for this site:</p>
+    <ul>
+      <li>A Sunday post, every week, 300 to 600 words, no exceptions, no gloss.</li>
+      <li>A track record page listing every closed trade with entry, exit, and reason. Auditable against the fill database, the logs, and broker statements.</li>
+      <li>An incident log for every bug and every manual intervention. Failures stay on the record.</li>
+    </ul>
+
+    <p>Verdict date: March 2027. At that point the question is simple. Did the evidence, gathered honestly over months, justify trying this system with real money at prop-firm stakes, or does the lab shut down and publish its own autopsy? Either outcome is a win for one of us reading. There is no third outcome where the rules quietly mutate until the backtest looks good.</p>
+
+    <blockquote>No signals. No subscriptions. No spin. The lab sells nothing, including certainty.</blockquote>
+
+    <p>Next week: the story of how my forex bot bought the same trade eleven times in five days, and why that bug is the reason I trust this project more now than I did before it.</p>
+
+    <p>Comments are off, but the door is ajar: <a href="mailto:hello@kortanalab.com" style="color:var(--accent);">hello@kortanalab.com</a>.</p>
+  </article>
+
+  <div class="nextprev">
+    <a href="/journal/2026-11-29-eleven-buys.html">Next: Eleven buys on one signal →</a>
+  </div>
+
+  <footer class="site">
+    <span>Kortana Lab · since Oct 13, 2026</span>
+    <span>Paper only. No signals, no subscriptions, no spin.</span>
+  </footer>
+
+</div>
+<script>
+(function () {
+  var stored = null;
+  try { stored = localStorage.getItem('kortana-lang'); } catch (e) {}
+  if (stored !== 'fr') { return; }
+  var map = [
+    ['Home','Accueil'],
+    ['Track record','Historique'],
+    ['Sunday, November 29, 2026 · Post 001 · the lab opens','Dimanche 29 novembre 2026 · Billet 001 · ouverture du labo']
+  ];
+  function swap(node, pair) {
+    if (node.textContent.trim() === pair[0]) { node.textContent = pair[1]; }
+  }
+  var walks = document.querySelectorAll('body *');
+  for (var i = 0; i < walks.length; i++) {
+    for (var j = 0; j < map.length; j++) { swap(walks[i], map[j]); }
+  }
+  document.documentElement.lang = 'fr';
+})();
+</script>
+</body>
+</html>
