@@ -14,11 +14,11 @@
   header { border-bottom:1px solid #2a2a32; padding-bottom:2rem; margin-bottom:2.5rem; }
   .wordmark { font-family:'Helvetica Neue',Helvetica,Arial,sans-serif; font-size:clamp(1.8rem,5vw,2.6rem); font-weight:700; letter-spacing:0.32em; text-indent:0.32em; margin-bottom:0.3rem; }
   .tagline { color:var(--accent); font-size:1rem; font-style:italic; }
-  nav { font-family:'Helvetica Neue',Helvetica,Arial,sans-serif; font-size:0.8rem; letter-spacing:0.12em; text-transform:uppercase; margin-top:1.5rem; }
-  nav a { color:var(--dim); text-decoration:none; margin-right:1.6rem; }
-  nav a:hover, nav a[aria-current] { color:var(--text); }
+  .sitenav { font-family:'Helvetica Neue',Helvetica,Arial,sans-serif; font-size:0.8rem; letter-spacing:0.12em; text-transform:uppercase; margin-top:1.5rem; }
+  .sitenav a { color:var(--dim); text-decoration:none; margin-right:1.6rem; }
+  .sitenav a:hover, .sitenav a[aria-current] { color:var(--text); }
   h2.section { font-family:'Helvetica Neue',Helvetica,Arial,sans-serif; font-size:0.8rem; font-weight:700; letter-spacing:0.18em; text-transform:uppercase; color:var(--dim); margin:2.5rem 0 0.75rem; }
-  main > p, main > div.intro p { font-size:1.06rem; margin-bottom:1rem; }
+  main p { font-size:1.06rem; margin-bottom:1rem; }
   .muted { color:var(--dim); font-size:0.95rem; }
   .counters { display:flex; flex-wrap:wrap; gap:0 2.5rem; border:1px solid #2a2a32; border-radius:4px; padding:1.2rem 1.5rem; margin:1rem 0 0; }
   .counter { padding:0.3rem 0; }
@@ -46,7 +46,7 @@
     <div class="wordmark">KORTANA</div>
     <div class="tagline" data-en="The track record. Everything that closed, good or bad."
          data-fr="L'historique. Tout ce qui a clôturé, bon ou mauvais.">The track record. Everything that closed, good or bad.</div>
-    <nav>
+    <nav class="sitenav">
       <a href="/" data-en="Home" data-fr="Accueil">Home</a>
       <a href="/journal/">Journal</a>
       <a href="/track-record/" aria-current="page" data-en="Track record" data-fr="Historique">Track record</a>
@@ -54,71 +54,95 @@
   </header>
 
   <main>
-    <div class="intro">
-      <p data-en="Paper account opened October 13, 2026. This table lists every trade the system has closed since. Nothing is removed, smoothed, or retro-edited. Numbers come from the bot logs, the trade database, and broker statements. If those three disagree, that gets published too."
-         data-fr="Compte papier ouvert le 13 octobre 2026. Ce tableau recense chaque trade clôturé par le système depuis. Rien n'est retiré, lissé ni modifié après coup. Les chiffres proviennent des journaux du robot, de la base de données de trades et des relevés du courtier. Si les trois sources divergent, c'est publié aussi.">
-        Paper account opened October 13, 2026. This table lists every trade the system has closed since. Nothing is removed, smoothed, or retro-edited. Numbers come from the bot logs, the trade database, and broker statements. If those three disagree, that gets published too.</p>
-    </div>
+    <p data-en="Paper account opened October 13, 2026 with $100,000. This page lists every trade the systems have closed since. Nothing is removed, smoothed, or retro-edited. Numbers come from the fill database, the bot logs, and broker statements. If those sources disagree, that gets published too."
+       data-fr="Compte papier ouvert le 13 octobre 2026 avec 100 000 $. Cette page recense chaque trade clôturé par les systèmes depuis. Rien n'est retiré, lissé ni modifié après coup. Les chiffres proviennent de la base de transactions, des journaux des robots et des relevés. Si les sources divergent, c'est publié aussi.">
+      Paper account opened October 13, 2026 with $100,000. This page lists every trade the systems have closed since. Nothing is removed, smoothed, or retro-edited. Numbers come from the fill database, the bot logs, and broker statements. If those sources disagree, that gets published too.</p>
 
     <h2 class="section" data-en="Running counters" data-fr="Compteurs">Running counters</h2>
+    <!-- WEEKLY: update these values every Sunday from weekly_metrics.py + closed-trade math. Never estimate. -->
     <div class="counters">
-      <!-- UPDATE EVERY SUNDAY, from the weekly metrics the rig produces. -->
       <div class="counter"><div class="label" data-en="Closed trades" data-fr="Trades clôturés">Closed trades</div><div class="value">2</div></div>
       <div class="counter"><div class="label" data-en="Wins · losses" data-fr="Gains · pertes">Wins · losses</div><div class="value">1 · 1</div></div>
-      <div class="counter"><div class="label" data-en="Net P/L" data-fr="P/L net">Net P/L</div><div class="value">$-43</div></div>
-      <!-- Fill from the rig's weekly metrics; leave the dash until you have the real number. -->
-      <div class="counter"><div class="label" data-en="Max drawdown" data-fr="Perte maximale">Max drawdown</div><div class="value">&mdash;</div></div>
+      <div class="counter"><div class="label" data-en="Net realized P/L" data-fr="P/L réalisé net">Net realized P/L</div><div class="value">-$43.60</div></div>
+      <div class="counter"><div class="label" data-en="Equity" data-fr="Capitaux propres">Equity</div><div class="value">$100,099.71</div></div>
+      <div class="counter"><div class="label" data-en="Max drawdown (realized)" data-fr="Perte max (réalisée)">Max drawdown (realized)</div><div class="value">-$60.31</div></div>
       <div class="counter"><div class="label" data-en="Days running" data-fr="Jours en fonction">Days running</div><div class="value">45</div></div>
     </div>
+    <p class="muted" data-en="Counters as of Nov 27, 2026. Drawdown is realized-only so far; a full equity-curve drawdown figure starts once weekly snapshots accumulate."
+       data-fr="Compteurs au 27 nov. 2026. La perte maximale est pour l'instant réalisée seulement ; le calcul complet suivra l'accumulation des relevés hebdomadaires.">
+      Counters as of Nov 27, 2026. Drawdown is realized-only so far; a full equity-curve drawdown figure starts once weekly snapshots accumulate.</p>
 
     <h2 class="section" data-en="Closed trades" data-fr="Trades clôturés">Closed trades</h2>
-    <!-- WEEKLY: add one row per closed trade, straight from trades.db. Fill date and price cells from the records; never estimate from memory. -->
+    <!-- WEEKLY: append one row per closed trade, straight from the database. Never from memory. -->
     <table>
       <thead>
         <tr>
           <th data-en="Symbol" data-fr="Symbole">Symbol</th>
           <th data-en="Opened" data-fr="Ouvert">Opened</th>
           <th data-en="Closed" data-fr="Clôturé">Closed</th>
+          <th data-en="Size" data-fr="Taille">Size</th>
+          <th data-en="Entry" data-fr="Entrée">Entry</th>
+          <th data-en="Exit" data-fr="Sortie">Exit</th>
           <th>P/L</th>
-          <th data-en="Rule reason" data-fr="Motif prévu par les règles">Rule reason</th>
-          <th data-en="Notes" data-fr="Notes">Notes</th>
         </tr>
       </thead>
       <tbody>
         <tr>
           <td>AMZN</td>
-          <td><!-- from trades.db --></td>
-          <td><!-- from trades.db --></td>
-          <td class="neg">-$60</td>
-          <td data-en="Entry triggered, 10 day exit" data-fr="Entrée déclenchée, sortie à 10 jours">Entry triggered, 10 day exit</td>
-          <td data-en="Whipsaw. Textbook loss, taken as designed." data-fr="Faux signal. Perte exemplaire, prise comme prévu.">Whipsaw. Textbook loss, taken as designed.</td>
+          <td>Oct 20</td>
+          <td>Oct 22</td>
+          <td>$1,000</td>
+          <td>$264.32</td>
+          <td>$248.375</td>
+          <td class="neg">-$60.31</td>
         </tr>
         <tr>
           <td>V</td>
-          <td><!-- from trades.db --></td>
-          <td><!-- from trades.db --></td>
-          <td class="pos">+$17</td>
-          <td data-en="Turtle exit signal" data-fr="Signal de sortie Turtle">Turtle exit signal</td>
-          <td data-en="Small win exited on signal. Rules held." data-fr="Petit gain clôturé sur signal. Les règles ont tenu.">Small win exited on signal. Rules held.</td>
+          <td>Oct 20</td>
+          <td>Nov 18</td>
+          <td>$1,000</td>
+          <td>$405.575</td>
+          <td>$412.35</td>
+          <td class="pos">+$16.71</td>
         </tr>
       </tbody>
     </table>
+    <p class="muted" data-en="AMZN: entered on a 20-day breakout, exited two days later when price broke the 10-day low. A textbook whipsaw loss, taken exactly as the rules prescribe. V: entered on a 20-day breakout, held four weeks, exited on the 10-day low signal. A small win, and proof the rules held through the entire November incident."
+       data-fr="AMZN : entrée sur cassure des 20 jours, sortie deux jours plus tard sous le plus bas des 10 jours. Faux signal exemplaire, perte prise comme prévu. V : entrée sur cassure des 20 jours, position tenue quatre semaines, sortie sur le signal des 10 jours. Petit gain, et preuve que les règles ont tenu pendant tout l'incident de novembre.">
+      AMZN: entered on a 20-day breakout, exited two days later when price broke the 10-day low. A textbook whipsaw loss, taken exactly as the rules prescribe. V: entered on a 20-day breakout, held four weeks, exited on the 10-day low signal. A small win, and proof the rules held through the entire November incident.</p>
 
     <h2 class="section" data-en="Incident log" data-fr="Journal des incidents">Incident log</h2>
     <p data-en="Bugs, data outages, and manual interventions, kept on the public record. A track record that never admits anything is a marketing document, not a record."
        data-fr="Bogues, interruptions de données et interventions manuelles, tenus au registre public. Un historique qui n'admet rien est un document marketing, pas un registre.">
       Bugs, data outages, and manual interventions, kept on the public record. A track record that never admits anything is a marketing document, not a record.</p>
+
     <div class="incident">
-      <div class="when">2026-11-05 · 2026-11-16</div>
-      <p data-en="Duplicate buy incident. A failed position fetch made the forex bot believe it was flat, and it stacked about eleven times the intended size in USD_CAD. The trade was manually trimmed back to intended size. Root cause found, fail-safe logic rewritten and deployed November 16. The trade database was deliberately left as it happened, because rewriting history is worse than the bug. Full write-up in the journal."
-         data-fr="Incident d'achat en doublon. Un échec de lecture des positions a fait croire au robot forex qu'il était à plat, et il a empilé environ onze fois la taille visée sur USD_CAD. Le trade a été ramené manuellement à la taille prévue. Cause racine identifiée, logique de sécurité réécrite et déployée le 16 novembre. La base de trades a volontairement été laissée telle quelle : réécrire l'histoire est pire que le bogue. Billet complet dans le journal.">
-        Duplicate buy incident. A failed position fetch made the forex bot believe it was flat, and it stacked about eleven times the intended size in USD_CAD. The trade was manually trimmed back to intended size. Root cause found, fail-safe logic rewritten and deployed November 16. The trade database was deliberately left as it happened, because rewriting history is worse than the bug. Full write-up in the journal.</p>
+      <div class="when">OCT 27 · duplicate buys</div>
+      <p>AUD_USD bought twice on the same breakout signal, doubling intended size. First observed instance of the position-fetch failure pattern described below.</p>
     </div>
 
+    <div class="incident">
+      <div class="when">NOV 3 · corrupted exit record</div>
+      <p>The AUD_USD exit was recorded at price 0.0: the price fetch failed and the failure leaked into the fill record instead of stopping it. The position closed, the record stayed broken. Kept as-is.</p>
+    </div>
+
+    <div class="incident">
+      <div class="when">NOV 5 · duplicate buys</div>
+      <p>GBP_USD bought eight times on one signal, about 8,000 units against an intended 1,000. Position manually reduced to intended size.</p>
+    </div>
+
+    <div class="incident">
+      <div class="when">NOV 12 to 16 · duplicate buys</div>
+      <p>USD_CAD bought eleven times across five days, about 11,000 units against an intended 1,000. Manually trimmed to 1,000 on Nov 16. Root cause identified: when the position query failed, the bot treated the failure as no position and bought again on the next scan. Fail-safe logic rewritten and deployed Nov 16: a failed fetch now means do nothing, and oversized stacks block new entries. The fill database was deliberately left exactly as it happened.</p>
+    </div>
+
+    <p class="muted" data-en="Full write-up of the incident series: the journal, Nov 29."
+       data-fr="Billet complet sur la série d'incidents : le journal, 29 nov.">Full write-up of the incident series: the journal, Nov 29.</p>
+
     <h2 class="section" data-en="Methodology" data-fr="Méthode">Methodology</h2>
-    <p class="muted" data-en="All entries are generated by a static Turtle-style trend-following system with fixed rules. The operator does not intervene in entries or exits. Where manual action was unavoidable, it appears above, in the incident log. The position size is $1,000 per position, up to three per market, on a paper account. Every closed trade above is auditable against three independent sources: the bot logs, the SQLite trade database, and the broker statement."
-       data-fr="Toutes les entrées sont générées par un système statique de suivi de tendance de style Turtle à règles fixes. L'opérateur n'intervient ni à l'entrée ni à la sortie. Quand une action manuelle était inévitable, elle figure ci-dessus, dans le journal des incidents. La taille est de 1 000 $ par position, jusqu'à trois par marché, sur compte papier. Chaque trade clôturé ci-dessus peut être vérifié auprès de trois sources indépendantes : les journaux du robot, la base SQLite et le relevé du courtier.">
-      All entries are generated by a static Turtle-style trend-following system with fixed rules. The operator does not intervene in entries or exits. Where manual action was unavoidable, it appears above, in the incident log. The position size is $1,000 per position, up to three per market, on a paper account. Every closed trade above is auditable against three independent sources: the bot logs, the SQLite trade database, and the broker statement.</p>
+    <p class="muted" data-en="All entries and exits are generated by static Turtle-style trend-following rules: enter on a 20-day high breakout, exit when price crosses below the 10-day low. The operator does not intervene in entries or exits. Where manual action was unavoidable, it appears above, in the incident log. Position size is about $1,000 per position, maximum three per market, on paper and practice accounts only. One ruleset, three venues: stocks, forex, and crypto. Every closed trade above is auditable against three independent sources: the fill database, the bot logs, and the broker statements."
+       data-fr="Toutes les entrées et sorties sont générées par des règles statiques de style Turtle : entrée sur cassure du plus haut des 20 jours, sortie sous le plus bas des 10 jours. L'opérateur n'intervient ni à l'entrée ni à la sortie. Quand une action manuelle était inévitable, elle figure ci-dessus. Taille d'environ 1 000 $ par position, trois par marché maximum, sur comptes papier uniquement. Un seul jeu de règles, trois plateformes : actions, devises et crypto. Chaque trade clôturé est vérifiable auprès de trois sources indépendantes : la base de transactions, les journaux des robots et les relevés.">
+      All entries and exits are generated by static Turtle-style trend-following rules: enter on a 20-day high breakout, exit when price crosses below the 10-day low. The operator does not intervene in entries or exits. Where manual action was unavoidable, it appears above, in the incident log. Position size is about $1,000 per position, maximum three per market, on paper and practice accounts only. One ruleset, three venues: stocks, forex, and crypto. Every closed trade above is auditable against three independent sources: the fill database, the bot logs, and the broker statements.</p>
   </main>
 
   <footer>
