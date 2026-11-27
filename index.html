@@ -4,98 +4,35 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>KORTANA · A rules-based trading lab</title>
-<meta name="description" content="One operator. One static Turtle-style trend-following system. Run on paper until the evidence says otherwise. Published in public, unedited.">
+<meta name="description" content="One operator. One static Turtle-style trend-following ruleset, applied the same way in three markets: forex, stocks, crypto. Published in public, unedited.">
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' fill='%231a1a1a'/%3E%3Cellipse cx='32' cy='40' rx='20' ry='14' fill='%236d4aff'/%3E%3Cellipse cx='32' cy='42' rx='13' ry='9' fill='%2354379e'/%3E%3Cpath d='M32 26 L40 34 L24 34 Z' fill='%236d4aff'/%3E%3Ccircle cx='27' cy='31' r='2' fill='%231a1a1a'/%3E%3Ccircle cx='37' cy='31' r='2' fill='%231a1a1a'/%3E%3C/svg%3E">
 <style>
-  :root {
-    --bg: #101014;
-    --text: #e8e8ec;
-    --dim: #8a8a94;
-    --accent: #6d4aff;
-    --maxw: 42rem;
-  }
-  * { margin: 0; padding: 0; box-sizing: border-box; }
-  html { -webkit-text-size-adjust: 100%; }
-  body {
-    background: var(--bg);
-    color: var(--text);
-    font-family: Georgia, 'Times New Roman', serif;
-    line-height: 1.7;
-    padding: 0 1.5rem;
-  }
-  .wrap { max-width: var(--maxw); margin: 0 auto; padding: 5rem 0 4rem; }
-  header { border-bottom: 1px solid #2a2a32; padding-bottom: 3rem; margin-bottom: 3rem; }
-  .wordmark {
-    font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
-    font-size: clamp(2.2rem, 6vw, 3.4rem);
-    font-weight: 700;
-    letter-spacing: 0.32em;
-    text-indent: 0.32em;
-    color: var(--text);
-    margin-bottom: 0.4rem;
-  }
-  .tagline {
-    color: var(--accent);
-    font-size: 1.05rem;
-    letter-spacing: 0.06em;
-    font-style: italic;
-  }
-  .sitenav {
-    font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
-    font-size: 0.8rem;
-    letter-spacing: 0.12em;
-    text-transform: uppercase;
-    margin-top: 1.5rem;
-  }
-  .sitenav a { color: var(--dim); text-decoration: none; margin-right: 1.6rem; }
-  .sitenav a:hover, .sitenav a[aria-current] { color: var(--text); }
-  main h2 {
-    font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
-    font-size: 0.8rem;
-    font-weight: 700;
-    letter-spacing: 0.18em;
-    text-transform: uppercase;
-    color: var(--dim);
-    margin: 2.5rem 0 0.75rem;
-  }
-  main p { font-size: 1.06rem; margin-bottom: 1rem; }
-  .rules { list-style: none; margin-top: 1rem; }
-  .rules li { padding-left: 1.4rem; position: relative; margin-bottom: 0.6rem; font-size: 1.06rem; }
-  .rules li::before { content: '§'; position: absolute; left: 0; color: var(--accent); }
-  .muted { color: var(--dim); font-size: 0.95rem; }
-  footer {
-    border-top: 1px solid #2a2a32;
-    margin-top: 3.5rem;
-    padding-top: 1.5rem;
-    font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
-    font-size: 0.85rem;
-    color: var(--dim);
-    display: flex;
-    justify-content: space-between;
-    flex-wrap: wrap;
-    gap: 0.5rem;
-  }
-  footer a { color: var(--dim); text-decoration: none; border-bottom: 1px solid #3a3a44; }
-  footer a:hover { color: var(--text); }
-  .langswitch {
-    position: fixed;
-    top: 1rem;
-    right: 1rem;
-    font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
-    font-size: 0.75rem;
-    letter-spacing: 0.1em;
-    background: transparent;
-    color: var(--dim);
-    border: 1px solid #3a3a44;
-    border-radius: 3px;
-    padding: 0.35rem 0.7rem;
-    cursor: pointer;
-  }
-  .langswitch:hover { color: var(--text); border-color: var(--dim); }
+  :root { --bg:#101014; --text:#e8e8ec; --dim:#8a8a94; --accent:#6d4aff; --maxw:42rem; }
+  * { margin:0; padding:0; box-sizing:border-box; }
+  html { -webkit-text-size-adjust:100%; }
+  body { background:var(--bg); color:var(--text); font-family:Georgia,'Times New Roman',serif; line-height:1.7; padding:0 1.5rem; }
+  .wrap { max-width:var(--maxw); margin:0 auto; padding:5rem 0 4rem; }
+  header { border-bottom:1px solid #2a2a32; padding-bottom:3rem; margin-bottom:3rem; }
+  .wordmark { font-family:'Helvetica Neue',Helvetica,Arial,sans-serif; font-size:clamp(2.2rem,6vw,3.4rem); font-weight:700; letter-spacing:0.32em; text-indent:0.32em; margin-bottom:0.4rem; }
+  .tagline { color:var(--accent); font-size:1.05rem; letter-spacing:0.06em; font-style:italic; }
+  .sitenav { font-family:'Helvetica Neue',Helvetica,Arial,sans-serif; font-size:0.8rem; letter-spacing:0.12em; text-transform:uppercase; margin-top:1.5rem; }
+  .sitenav a { color:var(--dim); text-decoration:none; margin-right:1.6rem; }
+  .sitenav a:hover, .sitenav a[aria-current] { color:var(--text); }
+  main h2 { font-family:'Helvetica Neue',Helvetica,Arial,sans-serif; font-size:0.8rem; font-weight:700; letter-spacing:0.18em; text-transform:uppercase; color:var(--dim); margin:2.5rem 0 0.75rem; }
+  main p { font-size:1.06rem; margin-bottom:1rem; }
+  .rules { list-style:none; margin-top:1rem; }
+  .rules li { padding-left:1.4rem; position:relative; margin-bottom:0.6rem; font-size:1.06rem; }
+  .rules li::before { content:'§'; position:absolute; left:0; color:var(--accent); }
+  .muted { color:var(--dim); font-size:0.95rem; }
+  footer { border-top:1px solid #2a2a32; margin-top:3.5rem; padding-top:1.5rem; font-family:'Helvetica Neue',Helvetica,Arial,sans-serif; font-size:0.85rem; color:var(--dim); display:flex; justify-content:space-between; flex-wrap:wrap; gap:0.5rem; }
+  footer a { color:var(--dim); text-decoration:none; border-bottom:1px solid #3a3a44; }
+  footer a:hover { color:var(--text); }
+  .langswitch { position:fixed; top:1rem; right:1rem; font-family:'Helvetica Neue',Helvetica,Arial,sans-serif; font-size:0.75rem; letter-spacing:0.1em; background:transparent; color:var(--dim); border:1px solid #3a3a44; border-radius:3px; padding:0.35rem 0.7rem; cursor:pointer; }
+  .langswitch:hover { color:var(--text); border-color:var(--dim); }
   @media (prefers-reduced-motion: no-preference) {
-    .wordmark, .tagline { opacity: 0; animation: fadein 1s ease forwards; }
-    .tagline { animation-delay: 0.25s; }
-    @keyframes fadein { to { opacity: 1; } }
+    .wordmark, .tagline { opacity:0; animation:fadein 1s ease forwards; }
+    .tagline { animation-delay:0.25s; }
+    @keyframes fadein { to { opacity:1; } }
   }
 </style>
 </head>
@@ -114,9 +51,9 @@
   </header>
 
   <main>
-    <p data-en="One operator. One static Turtle-style trend-following system."
-       data-fr="Un opérateur. Un système unique de suivi de tendance de style Turtle.">
-      One operator. One static Turtle-style trend-following system.</p>
+    <p data-en="One operator. One static Turtle-style ruleset, applied the same way in three markets: forex, stocks, crypto."
+       data-fr="Un opérateur. Un seul jeu de règles statiques de style Turtle, appliqué pareillement sur trois marchés : devises, actions, crypto.">
+      One operator. One static Turtle-style ruleset, applied the same way in three markets: forex, stocks, crypto.</p>
 
     <p data-en="Paper account started October 13, 2026. Everything published: wins, losses, bugs."
        data-fr="Compte papier ouvert le 13 octobre 2026. Tout est publié : gains, pertes, bogues.">
@@ -126,25 +63,24 @@
     <ul class="rules">
       <li data-en="Static rules only. The operator learns, the bot never does."
           data-fr="Des règles statiques, point. L'opérateur apprend, le robot jamais.">Static rules only. The operator learns, the bot never does.</li>
-      <li data-en="Small size always. $1,000 per position, three per market."
-          data-fr="Toujours de petites tailles. 1 000 $ par position, trois par marché.">Small size always. $1,000 per position, three per market.</li>
+      <li data-en="Small size always. About $1,000 per position, three per market."
+          data-fr="Toujours de petites tailles. Environ 1 000 $ par position, trois par marché.">Small size always. About $1,000 per position, three per market.</li>
       <li data-en="Nothing hidden. Losses, bugs, and blind spells get published."
           data-fr="Rien de caché. Pertes, bogues et périodes d'aveuglement sont publiés.">Nothing hidden. Losses, bugs, and blind spells get published.</li>
     </ul>
 
     <h2 data-en="Status" data-fr="Où on en est">Status</h2>
-    <p class="muted" data-en="First weekly report: this Sunday."
-       data-fr="Premier rapport hebdomadaire : ce dimanche.">First weekly report: this Sunday.</p>
-    <p class="muted" data-en="Full track record builds here as trades close."
-       data-fr="L'historique complet se construit ici au fil des clôtures.">Full track record builds here as trades close.</p>
+    <p class="muted" data-en="Equity: $100,099.71 · 2 trades closed · 45 days running (Nov 27, 2026)."
+       data-fr="Capitaux propres : 100 099,71 $ · 2 trades clôturés · 45 jours en fonction (27 nov. 2026).">Equity: $100,099.71 · 2 trades closed · 45 days running (Nov 27, 2026).</p>
+    <p class="muted" data-en="First weekly report: Sunday, November 29."
+       data-fr="Premier rapport hebdomadaire : dimanche 29 novembre.">First weekly report: Sunday, November 29.</p>
 
     <h2 data-en="Contact" data-fr="Écrire">Contact</h2>
-    <p class="muted"><a href="mailto:hello@kortanalab.com" style="color: inherit;">hello@kortanalab.com</a></p>
+    <p class="muted"><a href="mailto:hello@kortanalab.com" style="color:inherit;">hello@kortanalab.com</a></p>
   </main>
 
   <footer>
-    <span data-en="Kortana Lab · since Oct 13, 2026"
-          data-fr="Kortana Lab · depuis le 13 oct. 2026">Kortana Lab · since Oct 13, 2026</span>
+    <span data-en="Kortana Lab · since Oct 13, 2026" data-fr="Kortana Lab · depuis le 13 oct. 2026">Kortana Lab · since Oct 13, 2026</span>
     <span data-en="Paper only. No signals, no subscriptions, no spin."
           data-fr="Papier uniquement. Pas de signaux, pas d'abonnements, pas de baratin.">Paper only. No signals, no subscriptions, no spin.</span>
   </footer>
@@ -155,23 +91,18 @@
   var btn = document.getElementById('langswitch');
   var titleEN = 'KORTANA \u00b7 A rules-based trading lab';
   var titleFR = 'KORTANA \u00b7 Un laboratoire de trading fondé sur des règles';
-
   function apply(lang) {
     var nodes = document.querySelectorAll('[data-en]');
-    for (var i = 0; i < nodes.length; i++) {
-      nodes[i].textContent = nodes[i].getAttribute('data-' + lang);
-    }
+    for (var i = 0; i < nodes.length; i++) { nodes[i].textContent = nodes[i].getAttribute('data-' + lang); }
     document.documentElement.lang = (lang === 'fr') ? 'fr' : 'en';
     document.title = (lang === 'fr') ? titleFR : titleEN;
     btn.textContent = (lang === 'fr') ? 'EN' : 'FR';
     try { localStorage.setItem('kortana-lang', lang); } catch (e) {}
   }
-
   btn.addEventListener('click', function () {
     var current = document.documentElement.lang === 'fr' ? 'fr' : 'en';
     apply(current === 'fr' ? 'en' : 'fr');
   });
-
   var saved = null;
   try { saved = localStorage.getItem('kortana-lang'); } catch (e) {}
   if (saved === 'fr' || saved === 'en') { apply(saved); }
