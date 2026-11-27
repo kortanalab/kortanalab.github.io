@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>KORTANA · Eleven buys on one signal: anatomy of a bug</title>
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' fill='%231a1a1a'/%3E%3Cellipse cx='32' cy='40' rx='20' ry='14' fill='%236d4aff'/%3E%3Cellipse cx='32' cy='42' rx='13' ry='9' fill='%2354379e'/%3E%3Cpath d='M32 26 L40 34 L24 34 Z' fill='%236d4aff'/%3E%3Ccircle cx='27' cy='31' r='2' fill='%231a1a1a'/%3E%3Ccircle cx='37' cy='31' r='2' fill='%231a1a1a'/%3E%3C/svg%3E">
+<style>
+  :root { --bg:#101014; --text:#e8e8ec; --dim:#8a8a94; --accent:#6d4aff; --maxw:42rem; }
+  * { margin:0; padding:0; box-sizing:border-box; }
+  body { background:var(--bg); color:var(--text); font-family:Georgia,'Times New Roman',serif; line-height:1.75; padding:0 1.5rem; }
+  .wrap { max-width:var(--maxw); margin:0 auto; padding:4rem 0; }
+  header.site { border-bottom:1px solid #2a2a32; padding-bottom:2rem; margin-bottom:2.5rem; }
+  .wordmark { font-family:'Helvetica Neue',Helvetica,Arial,sans-serif; font-size:clamp(1.8rem,5vw,2.6rem); font-weight:700; letter-spacing:0.32em; text-indent:0.32em; margin-bottom:0.3rem; display:inline-block; color:var(--text); text-decoration:none; }
+  .sitenav { font-family:'Helvetica Neue',Helvetica,Arial,sans-serif; font-size:0.8rem; letter-spacing:0.12em; text-transform:uppercase; margin-top:1.2rem; }
+  .sitenav a { color:var(--dim); text-decoration:none; margin-right:1.6rem; }
+  .sitenav a:hover { color:var(--text); }
+  .postmeta { font-family:'Helvetica Neue',Helvetica,Arial,sans-serif; font-size:0.75rem; letter-spacing:0.12em; text-transform:uppercase; color:var(--dim); margin-bottom:1rem; }
+  h1 { font-size:1.9rem; line-height:1.25; margin-bottom:1.5rem; }
+  p { font-size:1.06rem; margin-bottom:1.1rem; }
+  blockquote { border-left:2px solid var(--accent); padding-left:1rem; color:var(--dim); font-style:italic; margin:1.2rem 0; }
+  code { font-family:ui-monospace,Menlo,Consolas,monospace; font-size:0.92em; background:#1c1c24; padding:0.1rem 0.35rem; border-radius:3px; color:#b9a8ff; }
+  footer.site { border-top:1px solid #2a2a32; margin-top:3rem; padding-top:1.5rem; font-family:'Helvetica Neue',Helvetica,Arial,sans-serif; font-size:0.85rem; color:var(--dim); display:flex; justify-content:space-between; flex-wrap:wrap; gap:0.5rem; }
+  footer.site a { color:var(--dim); }
+  .nextprev { margin-top:2.5rem; font-family:'Helvetica Neue',Helvetica,Arial,sans-serif; font-size:0.85rem; display:flex; justify-content:space-between; flex-wrap:wrap; gap:1rem; }
+  .nextprev a { color:var(--accent); text-decoration:none; }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <header class="site">
+    <a class="wordmark" href="/">KORTANA</a>
+    <nav class="sitenav">
+      <a href="/">Home</a>
+      <a href="/journal/" aria-current="page">Journal</a>
+      <a href="/track-record/">Track record</a>
+    </nav>
+  </header>
+
+  <article>
+    <div class="postmeta">Sunday, November 29, 2026 · Post 002 · the incident</div>
+    <h1>Eleven buys on one signal: anatomy of a bug</h1>
+
+    <p>This is the post most trading blogs would never write. My forex bot spent five days buying the same trade over and over, stacking eleven times its intended size, and I am going to walk you through exactly how dumb it looked in the database.</p>
+
+    <p>The system had one safety check that mattered: before entering, it asked the broker whether the position already existed. But sometimes the position query itself failed, and the code treated a failed query the same as an empty answer. Failed fetch equals "no position" equals "safe to buy." It bought again on the next 30 minute scan. And again. And again.</p>
+
+    <p>The record shows the whole arc. On October 27, AUD_USD was bought twice on one breakout. On November 3 the same position's exit was logged at price <code>0.0</code>, because a failed price fetch leaked into the fill record instead of stopping it. On November 5, GBP_USD got bought eight times in about four hours. And from November 12 to 16, USD_CAD bought eleven times: 11,000 units against an intended 1,000.</p>
+
+    <p>What did I do? Two things, one of them slow. The stacks were manually trimmed back to intended size, the same week they appeared. And the root cause, the failed-fetch bug, was traced and rewritten with fail-safe logic, deployed November 16. The new rule is simple: when the position query fails, do nothing. No answer is never an invitation to trade. And oversized stacks now block new entries outright.</p>
+
+    <p>Here is the part I want on the record, because it is the part people get wrong. I did not clean the database. The fills sit there exactly as they happened, duplicates, zero prices, everything, because a track record you edit is not a record. It is marketing. The honest lab leaves the evidence messy and explains it instead.</p>
+
+    <p>Two confessions from the same saga. First, the pattern was visible on October 27 and I did not treat it as urgent until it came back twice more. That is a real lesson about how failures escalate politely. Second, throughout all of this the rules themselves never blinked: the first closed stock trade in late October was a textbook whipsaw loss, taken exactly as prescribed, and a Visa position opened in October rode through the entire incident and closed on its own exit signal, a small win, on November 18, two days after the fix.</p>
+
+    <blockquote>A failed fetch is not an empty answer. Almost every trading disaster is some version of that sentence.</blockquote>
+
+    <p>Why do I trust this project more now? Because the failure happened, it is documented, and the system now contains a scar where the bug used to be. Scars are evidence. Backtests do not have any.</p>
+
+    <p>Next Sunday: the first regular weekly report. Equity, closed trades, and whether the fail-safe has held.</p>
+
+    <p>The full incident log with dates lives on the <a href="/track-record/" style="color:var(--accent);">track record page</a>. Letters go to <a href="mailto:hello@kortanalab.com" style="color:var(--accent);">hello@kortanalab.com</a>.</p>
+  </article>
+
+  <div class="nextprev">
+    <a href="/journal/2026-11-29-the-lab-opens.html">← Previous: The lab opens</a>
+    <span></span>
+  </div>
+
+  <footer class="site">
+    <span>Kortana Lab · since Oct 13, 2026</span>
+    <span>Paper only. No signals, no subscriptions, no spin.</span>
+  </footer>
+
+</div>
+<script>
+(function () {
+  var stored = null;
+  try { stored = localStorage.getItem('kortana-lang'); } catch (e) {}
+  if (stored !== 'fr') { return; }
+  var map = [
+    ['Home','Accueil'],
+    ['Track record','Historique'],
+    ['Sunday, November 29, 2026 · Post 002 · the incident','Dimanche 29 novembre 2026 · Billet 002 · l\u2019incident']
+  ];
+  function swap(node, pair) {
+    if (node.textContent.trim() === pair[0]) { node.textContent = pair[1]; }
+  }
+  var walks = document.querySelectorAll('body *');
+  for (var i = 0; i < walks.length; i++) {
+    for (var j = 0; j < map.length; j++) { swap(walks[i], map[j]); }
+  }
+  document.documentElement.lang = 'fr';
+})();
+</script>
+</body>
+</html>
